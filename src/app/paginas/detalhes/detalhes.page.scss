@@ -1,0 +1,28 @@
+.pokemon-card {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pokemon-image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.pokemon-image {
+  width: 150px;
+  height: 150px;
+}
+
+.pokemon-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.hidden-label {
+  color: gray;
+  font-style: italic;
+  margin-left: 5px;
+}

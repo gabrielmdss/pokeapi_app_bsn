@@ -13,12 +13,21 @@ import {
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { Storage } from '@ionic/storage-angular';
 
+const storageProvider = {
+  provide: Storage,
+  useFactory: () => {
+    const storage = new Storage();
+    return storage;
+  },
+};
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withFetch()),
+    storageProvider
   ],
 });

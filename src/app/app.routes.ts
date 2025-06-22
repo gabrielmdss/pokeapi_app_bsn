@@ -10,5 +10,14 @@ export const routes: Routes = [
     path: 'lista',
     loadComponent: () =>
       import('./paginas/lista/lista.page').then((m) => m.ListaPage),
-  }
+  },
+  {
+    path: 'detalhes',
+    loadComponent: () => import('./paginas/detalhes/detalhes.page').then( m => m.DetalhesPage)
+  },
+  {
+    path: 'detalhes/:id',
+    loadComponent: () =>
+      import('./paginas/detalhes/detalhes.page').then((m) => m.DetalhesPage),
+  },
 ];

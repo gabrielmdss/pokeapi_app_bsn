@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Detalhes do Pokémon</ion-title>
+    <ion-menu-button slot="start"></ion-menu-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="pokemon" class="ion-padding">
+  <ion-card class="pokemon-card">
+    <div class="pokemon-image-wrapper">
+      <img
+        [src]="pokemon.sprites.front_default"
+        alt="{{ pokemon.name }}"
+        class="pokemon-image"
+      />
+    </div>
+
+    <ion-card-header>
+      <ion-card-title class="pokemon-title">
+        #{{ pokemon.id }} - {{ pokemon.name | titlecase }}
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <p><strong>Peso:</strong> {{ pokemon.weight }} kg</p>
+          </ion-col>
+          <ion-col size="6">
+            <p><strong>Altura:</strong> {{ pokemon.height }} m</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <p><strong>Habilidades:</strong></p>
+      <ul>
+        <li *ngFor="let habilidade of pokemon.abilities">
+          {{ habilidade.ability.name | titlecase }}
+          <span *ngIf="habilidade.is_hidden" class="hidden-label">(oculta)</span>
+        </li>
+      </ul>
+
+      <ion-button expand="block" color="danger" (click)="favoritarPokemon()">
+        <ion-icon slot="start" name="heart"></ion-icon>
+        Favoritar
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
