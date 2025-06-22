@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Favoritos</ion-title>
+    <ion-menu-button slot="start"></ion-menu-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-header>
+    <ion-title>Pokédex</ion-title>
+    <ion-title size="small">Explore o mundo dos Pokémons</ion-title>
+  </ion-header>
+
+  <h1>Seus pokémons favoritos</h1>
+  <p>{{ favoritos.length }} Pokémon(s) favorito(s)</p>
+
+  <ion-card *ngFor="let pokemon of favoritos" class="pokemon-card">
+    <img
+      alt="Pokemon Imagem"
+      [src]="
+        pokemon.sprites?.other?.['official-artwork']?.front_default ||
+        pokemon.sprites?.front_default
+      "
+    />
+    <ion-card-header>
+      <ion-card-title>{{ pokemon.name | titlecase }}</ion-card-title>
+      <ion-card-subtitle>#{{ pokemon.id | number: '3.0' }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" (click)="verDetalhes(pokemon)">Detalhes</ion-button>
+      <ion-button
+        color="danger"
+        expand="block"
+        (click)="removerFavorito(pokemon)"
+      >
+        <ion-icon slot="start" name="trash"></ion-icon> Remover
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <p *ngIf="favoritos.length === 0" class="ion-text-center">
+    Nenhum Pokémon favoritado ainda.
+  </p>
+</ion-content>

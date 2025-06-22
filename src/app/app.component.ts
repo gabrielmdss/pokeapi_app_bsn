@@ -59,6 +59,7 @@ export class AppComponent {
   public appPages = [
     { title: 'Lista', url: 'lista', icon: 'list' },
     { title: 'Detalhes', url: 'detalhes', icon: 'alert-circle' },
+    { title: 'Favoritos', url: 'favoritos', icon: 'heart' },
   ];
   constructor() {
     addIcons({
