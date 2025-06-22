@@ -12,6 +12,7 @@ import {
   IonToolbar,
   IonCol,
   IonCardContent,
+  IonButtons,
   IonCard,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
@@ -35,6 +36,7 @@ import { PokeApiService } from 'src/app/services/poke-api.service';
     IonGrid,
     IonText,
     CommonModule,
+    IonButtons
   ],
   styleUrls: ['./lista.page.scss'],
 })

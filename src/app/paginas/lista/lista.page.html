@@ -1,45 +1,50 @@
 <ion-header>
   <ion-toolbar color="light">
-    <ion-title class="ion-text-center">Pokédex</ion-title>
-    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-buttons slot="start">
+      <ion-menu-button color="dark"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center ion-text-dark" style="font-weight: 700;">
+      Pokédex
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content color="light">
-  <ion-text class="ion-padding ion-text-center">
-    <h2>Explore o mundo dos Pokémons</h2>
+  <ion-text class="ion-padding ion-text-center ion-text-dark">
+    <h2 style="font-weight: 600; margin-bottom: 16px;">Explore o mundo dos Pokémons</h2>
   </ion-text>
 
   <ion-grid>
     <ion-row>
       <ion-col
-  size="6"
-  size-md="4"
-  size-lg="3"
-  *ngFor="let pokemon of pokemons"
-  class="ion-text-center"
->
-  <ion-card button (click)="irParaDetalhes(pokemon.id)">
-    <img
-      [src]="pokemon.sprites?.front_default"
-      alt="{{ pokemon.name }}"
-      style="width: 100px; height: 100px; margin: auto; display: block"
-    />
-    <ion-card-content>
-      <ion-text color="dark">
-        <h3>#{{ pokemon.id }} - {{ pokemon.name | titlecase }}</h3>
-      </ion-text>
-    </ion-card-content>
-  </ion-card>
-</ion-col>
-
+        size="6"
+        size-md="4"
+        size-lg="3"
+        *ngFor="let pokemon of pokemons"
+        class="ion-text-center"
+      >
+        <ion-card button (click)="irParaDetalhes(pokemon.id)" style="cursor: pointer; transition: box-shadow 0.3s ease;">
+          <img
+            [src]="pokemon.sprites?.front_default"
+            alt="{{ pokemon.name }}"
+            style="width: 100px; height: 100px; margin: 12px auto 0; display: block;"
+            loading="lazy"
+          />
+          <ion-card-content>
+            <ion-text color="dark">
+              <h3 style="font-weight: 600; margin: 8px 0;">
+                #{{ pokemon.id }} - {{ pokemon.name | titlecase }}
+              </h3>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-text class="ion-padding ion-text-center" color="medium">
+  <ion-text class="ion-padding ion-text-center" color="medium" style="font-size: 0.9rem;">
     <p>
-      Exibindo {{ obterIndiceInicial() }}–{{ obterIndiceFinal() }} de
-      {{ total }} Pokémons
+      Exibindo {{ obterIndiceInicial() }} – {{ obterIndiceFinal() }} de {{ total }} Pokémons
     </p>
   </ion-text>
 
@@ -50,6 +55,7 @@
           expand="block"
           (click)="paginaAnterior()"
           [disabled]="offset === 0"
+          color="medium"
         >
           Voltar
         </ion-button>
@@ -59,6 +65,7 @@
           expand="block"
           (click)="proximaPagina()"
           [disabled]="offset + limit >= total"
+          color="primary"
         >
           Próximo
         </ion-button>

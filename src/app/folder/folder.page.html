@@ -1,21 +1,29 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button color="dark"></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{ folder }}</ion-title>
+    <ion-title class="ion-text-dark" style="font-weight: 600; font-size: 1.25rem;">
+      {{ folder }}
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" color="light">
   <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
+    <ion-toolbar color="light">
+      <ion-title size="large" class="ion-text-dark" style="font-weight: 700;">
+        {{ folder }}
+      </ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div id="container" style="padding: 16px;">
+    <strong class="capitalize ion-text-dark" style="font-weight: 600; font-size: 1.2rem;">{{ folder }}</strong>
+    <p style="color: #333; font-size: 1rem; margin-top: 8px;">
+      Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components" style="color: #3880ff; font-weight: 600; text-decoration: none;">
+        UI Components
+      </a>
+    </p>
   </div>
 </ion-content>
