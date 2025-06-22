@@ -12,20 +12,25 @@ describe('ListaPage', () => {
   let pokeApiService: jasmine.SpyObj<PokeApiService>;
 
   beforeEach(async () => {
-    const pokeApiServiceSpy = jasmine.createSpyObj('PokeApiService', ['getPokemonList', 'getPokemonById']);
+    const pokeApiServiceSpy = jasmine.createSpyObj('PokeApiService', [
+      'getPokemonList',
+      'getPokemonById',
+      'getPokemonDetails',
+    ]);
 
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), RouterTestingModule],
-      declarations: [ListaPage],
+      imports: [IonicModule.forRoot(), ListaPage],
       providers: [
         provideHttpClientTesting(),
-        { provide: PokeApiService, useValue: pokeApiServiceSpy }
+        { provide: PokeApiService, useValue: pokeApiServiceSpy },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ListaPage);
     component = fixture.componentInstance;
-    pokeApiService = TestBed.inject(PokeApiService) as jasmine.SpyObj<PokeApiService>;
+    pokeApiService = TestBed.inject(
+      PokeApiService
+    ) as jasmine.SpyObj<PokeApiService>;
   });
 
   it('deve ser criado', () => {
@@ -34,19 +39,26 @@ describe('ListaPage', () => {
 
   it('deve carregar lista de pokémons', async () => {
     const mockPokemonList = {
+      count: 1,
       results: [
-        { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' }
-      ]
+        { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
+      ],
     };
-    const mockPokemonDetails = { id: 1, name: 'bulbasaur', sprites: { front_default: 'url' } };
+    const mockPokemonDetails = {
+      id: 1,
+      name: 'bulbasaur',
+      sprites: { front_default: 'url' },
+    };
 
     pokeApiService.getPokemonList.and.returnValue(of(mockPokemonList));
-    pokeApiService.getPokemonById.and.returnValue(of(mockPokemonDetails));
+    pokeApiService.getPokemonDetails.and.returnValue(of(mockPokemonDetails));
 
     await component.carregarPokemons();
 
-    expect(pokeApiService.getPokemonList).toHaveBeenCalled();
-    expect(pokeApiService.getPokemonById).toHaveBeenCalled();
+    expect(pokeApiService.getPokemonList).toHaveBeenCalledWith(0, 20);
+    expect(pokeApiService.getPokemonDetails).toHaveBeenCalledWith(
+      'https://pokeapi.co/api/v2/pokemon/1/'
+    );
     expect(component.pokemons.length).toBeGreaterThan(0);
     expect(component.pokemons[0].name).toBe('bulbasaur');
   });
