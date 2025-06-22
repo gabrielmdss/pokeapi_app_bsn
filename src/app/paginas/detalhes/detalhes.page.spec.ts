@@ -17,8 +17,7 @@ describe('DetalhesPage', () => {
     mockStorage = jasmine.createSpyObj('Storage', ['create', 'get', 'set']);
 
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot()],
-      declarations: [DetalhesPage],
+      imports: [IonicModule.forRoot(),DetalhesPage],
       providers: [
         {
           provide: ActivatedRoute,
