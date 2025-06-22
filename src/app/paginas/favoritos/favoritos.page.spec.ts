@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 import { FavoritosPage } from './favoritos.page';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('FavoritosPage', () => {
   let component: FavoritosPage;
@@ -13,14 +14,15 @@ describe('FavoritosPage', () => {
   beforeEach(async () => {
     mockStorage = jasmine.createSpyObj('Storage', ['create', 'get', 'set']);
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
-
+    mockStorage.create.and.returnValue(Promise.resolve(mockStorage));
+    mockStorage.set.and.returnValue(Promise.resolve());
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot()],
-      declarations: [FavoritosPage],
+      imports: [IonicModule.forRoot(), FavoritosPage],
       providers: [
         { provide: Storage, useValue: mockStorage },
-        { provide: Router, useValue: mockRouter }
-      ]
+        { provide: Router, useValue: mockRouter },
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FavoritosPage);
@@ -34,7 +36,7 @@ describe('FavoritosPage', () => {
   it('deve carregar pokémons favoritos no ngOnInit', async () => {
     const favoritosMock = [
       { id: 1, name: 'bulbasaur', sprites: {} },
-      { id: 4, name: 'charmander', sprites: {} }
+      { id: 4, name: 'charmander', sprites: {} },
     ];
 
     mockStorage.create.and.resolveTo(mockStorage);
@@ -50,18 +52,20 @@ describe('FavoritosPage', () => {
   it('deve remover pokémon favorito', async () => {
     const favoritosMock = [
       { id: 1, name: 'bulbasaur' },
-      { id: 2, name: 'ivysaur' }
+      { id: 2, name: 'ivysaur' },
     ];
 
     component.favoritos = [...favoritosMock];
-    component['_storage'] = mockStorage;
+    (component as any).storage = mockStorage;
     mockStorage.set.and.resolveTo();
 
     await component.removerFavorito(favoritosMock[0]);
 
     expect(component.favoritos.length).toBe(1);
     expect(component.favoritos[0].id).toBe(2);
-    expect(mockStorage.set).toHaveBeenCalledWith('favoritos', [favoritosMock[1]]);
+    expect(mockStorage.set).toHaveBeenCalledWith('favoritos', [
+      favoritosMock[1],
+    ]);
   });
 
   it('deve navegar para a página de detalhes', () => {
