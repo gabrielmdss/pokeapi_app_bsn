@@ -63,6 +63,7 @@ export class DetalhesPage implements OnInit {
       message: mensagem,
       buttons: ['OK'],
       cssClass: 'meu-alerta-personalizado',
+      mode: 'md'
     });
     await alert.present();
   }
