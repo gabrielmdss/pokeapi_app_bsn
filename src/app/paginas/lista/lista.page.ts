@@ -141,7 +141,6 @@ export class ListaPage implements OnInit {
   }
 
   async alterarLimite() {
-    console.log('alterarLimite');
     this.offset = 0;
     await this.carregarPokemons();
   }
