@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AlertController } from '@ionic/angular';
 import { PokeApiService } from 'src/app/services/poke-api.service';
 import { Storage } from '@ionic/storage-angular';
 
@@ -23,7 +23,8 @@ export class DetalhesPage implements OnInit {
     private route: ActivatedRoute,
     private pokemonService: PokeApiService,
     private storage: Storage,
-    private router: Router
+    private router: Router,
+    private alertController: AlertController
   ) {}
 
   async ngOnInit() {
@@ -50,9 +51,19 @@ export class DetalhesPage implements OnInit {
     if (!favoritos.find((p: any) => p.id === this.pokemon.id)) {
       favoritos.push(this.pokemon);
       await this._storage.set('favoritos', favoritos);
-      alert('Pokémon favoritado com sucesso!');
+      this.mostrarAlerta('Sucesso', 'Pokémon favoritado com sucesso!');
     } else {
-      alert('Esse Pokémon já está nos favoritos.');
+      this.mostrarAlerta('Aviso', 'Esse Pokémon já está nos favoritos.');
     }
+  }
+
+  async mostrarAlerta(titulo: string, mensagem: string) {
+    const alert = await this.alertController.create({
+      header: titulo,
+      message: mensagem,
+      buttons: ['OK'],
+      cssClass: 'meu-alerta-personalizado',
+    });
+    await alert.present();
   }
 }
