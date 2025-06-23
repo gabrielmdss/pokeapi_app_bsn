@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +9,12 @@ import { environment } from 'src/environments/environment.prod';
 export class PokeApiService {
   baseURL = environment.POKE_API_URL;
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) {
+    console.log('Ambiente:', environment.production, 'BaseURL:', this.baseURL);
+  }
   getPokemonList(offset: number = 0, limit: number = 20) {
     return this.http.get(
-      `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+      `${this.baseURL}/pokemon?offset=${offset}&limit=${limit}`
     );
   }
 
