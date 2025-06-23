@@ -3,9 +3,6 @@
   color: #eee;
 }
 
-
-
-
 .pokemon-card {
   background-color: #1e1e1e;
   color: #eee;
@@ -14,7 +11,7 @@
 }
 
 .pokemon-title {
-  color: #f3d915; /* amarelo vibrante */
+  color: #f3d915; 
   font-weight: 700;
 }
 
@@ -24,8 +21,8 @@
 }
 
 .pokemon-image {
-  width: 150px;
-  height: 150px;
+  width: 250px;
+  height: 250px;
   object-fit: contain;
 }
 
@@ -52,7 +49,7 @@
 }
 
 .hidden-label {
-  color: #a89907; /* amarelo escuro */
+  color: #a89907;
   font-style: italic;
   margin-left: 6px;
 }
