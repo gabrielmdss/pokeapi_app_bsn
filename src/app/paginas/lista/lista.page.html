@@ -34,63 +34,66 @@
     <h2 style="font-weight: 600; margin-bottom: 16px;">Explore o mundo dos Pokémons</h2>
   </ion-text>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col
-        size="6"
-        size-md="4"
-        size-lg="3"
-        *ngFor="let pokemon of pokemonsFiltrados"
-        class="ion-text-center"
-      >
-        <ion-card button (click)="irParaDetalhes(pokemon.id)" style="cursor: pointer; transition: box-shadow 0.3s ease;">
-          <img
-            [src]="pokemon.sprites?.front_default"
-            alt="{{ pokemon.name }}"
-            style="width: 100px; height: 100px; margin: 12px auto 0; display: block;"
-            loading="lazy"
-          />
-          <ion-card-content>
-            <ion-text color="dark">
-              <h3 style="font-weight: 600; margin: 8px 0;">
-                #{{ pokemon.id }} - {{ pokemon.name | titlecase }}
-              </h3>
-            </ion-text>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-text class="ion-padding ion-text-center" color="medium" style="font-size: 0.9rem;">
-    <p>
-      Exibindo {{ obterIndiceInicial() }} – {{ obterIndiceFinal() }} de {{ total }} Pokémons
-    </p>
-  </ion-text>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col size="6">
-        <ion-button
-          expand="block"
-          (click)="paginaAnterior()"
-          [disabled]="offset === 0"
-          color="medium"
-        >
-          Voltar
-        </ion-button>
-      </ion-col>
-      <ion-col size="6">
-        <ion-button
-          expand="block"
-          (click)="proximaPagina()"
-          [disabled]="offset + limit >= total"
-          color="primary"
-        >
-          Próximo
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+   <ion-spinner *ngIf="carregando" name="crescent" class="spinner-center"></ion-spinner>
+   <div *ngIf="!carregando">
+     <ion-grid>
+       <ion-row>
+         <ion-col
+           size="6"
+           size-md="4"
+           size-lg="3"
+           *ngFor="let pokemon of pokemonsFiltrados"
+           class="ion-text-center"
+         >
+           <ion-card button (click)="irParaDetalhes(pokemon.id)" style="cursor: pointer; transition: box-shadow 0.3s ease;">
+             <img
+               [src]="pokemon.sprites?.front_default"
+               alt="{{ pokemon.name }}"
+               style="width: 100px; height: 100px; margin: 12px auto 0; display: block;"
+               loading="lazy"
+             />
+             <ion-card-content>
+               <ion-text color="dark">
+                 <h3 style="font-weight: 600; margin: 8px 0;">
+                   #{{ pokemon.id }} - {{ pokemon.name | titlecase }}
+                 </h3>
+               </ion-text>
+             </ion-card-content>
+           </ion-card>
+         </ion-col>
+       </ion-row>
+     </ion-grid>
+   
+     <ion-text class="ion-padding ion-text-center" color="medium" style="font-size: 0.9rem;">
+       <p>
+         Exibindo {{ obterIndiceInicial() }} – {{ obterIndiceFinal() }} de {{ total }} Pokémons
+       </p>
+     </ion-text>
+   
+     <ion-grid>
+       <ion-row>
+         <ion-col size="6">
+           <ion-button
+             expand="block"
+             (click)="paginaAnterior()"
+             [disabled]="offset === 0"
+             color="medium"
+           >
+             Voltar
+           </ion-button>
+         </ion-col>
+         <ion-col size="6">
+           <ion-button
+             expand="block"
+             (click)="proximaPagina()"
+             [disabled]="offset + limit >= total"
+             color="primary"
+           >
+             Próximo
+           </ion-button>
+         </ion-col>
+       </ion-row>
+     </ion-grid>
+  </div>
 </ion-content>
 

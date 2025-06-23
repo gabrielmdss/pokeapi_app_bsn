@@ -18,6 +18,7 @@ import {
   IonItem,
   IonSelect,
   IonLabel,
+  IonSpinner,
   IonCard,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
@@ -33,7 +34,7 @@ import { FormsModule } from '@angular/forms';
     IonCardContent,
     IonSelectOption,
     IonSelect,
-
+    IonSpinner,
     IonCol,
     IonItem,
     IonLabel,
@@ -75,13 +76,7 @@ export class ListaPage implements OnInit {
   }
 
   async carregarPokemons() {
-    const loading = await this.loadingController.create({
-      message: 'Carregando Pokémons...',
-      spinner: 'crescent',
-      translucent: true,
-    });
-    await loading.present();
-
+    this.carregando = true;
     try {
       const response: any = await firstValueFrom(
         this.pokeApiService.getPokemonList(this.offset, this.limit)
@@ -99,7 +94,7 @@ export class ListaPage implements OnInit {
     } catch (error) {
       console.error(error);
     } finally {
-      await loading.dismiss();
+      this.carregando = false;
     }
   }
 
