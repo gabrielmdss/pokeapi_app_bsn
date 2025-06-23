@@ -11,6 +11,7 @@ import {
   IonContent,
   IonToolbar,
   IonCol,
+  IonSearchbar,
   IonCardContent,
   IonButtons,
   IonCard,
@@ -18,6 +19,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { NavController } from '@ionic/angular';
 import { PokeApiService } from 'src/app/services/poke-api.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-lista',
@@ -34,14 +36,20 @@ import { PokeApiService } from 'src/app/services/poke-api.service';
     IonButton,
     IonRow,
     IonGrid,
+    IonSearchbar,
     IonText,
     CommonModule,
-    IonButtons
+    FormsModule,
+    IonButtons,
   ],
   styleUrls: ['./lista.page.scss'],
 })
 export class ListaPage implements OnInit {
   pokemons: any[] = [];
+  pokemonsFiltrados: any[] = [];
+
+  filtro: string = '';
+
   limit = 20;
   offset = 0;
   total = 0;
@@ -64,7 +72,7 @@ export class ListaPage implements OnInit {
         this.pokeApiService.getPokemonList(this.offset, this.limit)
       );
 
-      this.total = response.count; 
+      this.total = response.count;
       const resultados = response.results;
 
       this.pokemons = await Promise.all(
@@ -76,12 +84,20 @@ export class ListaPage implements OnInit {
           };
         })
       );
+      this.pokemonsFiltrados = [...this.pokemons];
       console.log(this.pokemons);
     } catch (error) {
       console.error(error);
     } finally {
       this.carregando = false;
     }
+  }
+
+  filtrarPokemons() {
+    const termo = this.filtro.toLowerCase();
+    this.pokemonsFiltrados = this.pokemons.filter((pokemon) =>
+      pokemon.name.toLowerCase().includes(termo)
+    );
   }
 
   proximaPagina() {

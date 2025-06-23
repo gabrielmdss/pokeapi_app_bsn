@@ -7,6 +7,13 @@
       Pokédex
     </ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      [(ngModel)]="filtro"
+      (ionInput)="filtrarPokemons()"
+      placeholder="Buscar pelo nome"
+    ></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content color="light">
@@ -20,7 +27,7 @@
         size="6"
         size-md="4"
         size-lg="3"
-        *ngFor="let pokemon of pokemons"
+        *ngFor="let pokemon of pokemonsFiltrados"
         class="ion-text-center"
       >
         <ion-card button (click)="irParaDetalhes(pokemon.id)" style="cursor: pointer; transition: box-shadow 0.3s ease;">
