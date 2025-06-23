@@ -35,3 +35,16 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+.meu-alerta-personalizado {
+  --background: #1a1c27;
+  --color: #ffffff; 
+  --backdrop-opacity: 0.6;
+
+  
+  --button-background: #2d2f3a;
+  --button-color: #f3d915; 
+
+  --border-radius: 14px;
+  --box-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
+}
