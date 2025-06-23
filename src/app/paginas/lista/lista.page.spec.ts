@@ -3,7 +3,6 @@ import { ListaPage } from './lista.page';
 import { PokeApiService } from 'src/app/services/poke-api.service';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { IonicModule } from '@ionic/angular';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 describe('ListaPage', () => {
