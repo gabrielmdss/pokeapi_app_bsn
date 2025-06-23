@@ -14,10 +14,14 @@ import {
   IonSearchbar,
   IonCardContent,
   IonButtons,
+  IonSelectOption,
+  IonItem,
+  IonSelect,
+  IonLabel,
   IonCard,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { NavController } from '@ionic/angular';
+import { NavController, LoadingController } from '@ionic/angular';
 import { PokeApiService } from 'src/app/services/poke-api.service';
 import { FormsModule } from '@angular/forms';
 
@@ -27,7 +31,12 @@ import { FormsModule } from '@angular/forms';
   imports: [
     IonCard,
     IonCardContent,
+    IonSelectOption,
+    IonSelect,
+
     IonCol,
+    IonItem,
+    IonLabel,
     IonToolbar,
     IonMenuButton,
     IonContent,
@@ -57,7 +66,8 @@ export class ListaPage implements OnInit {
 
   constructor(
     private pokeApiService: PokeApiService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
@@ -65,31 +75,31 @@ export class ListaPage implements OnInit {
   }
 
   async carregarPokemons() {
-    this.carregando = true;
+    const loading = await this.loadingController.create({
+      message: 'Carregando Pokémons...',
+      spinner: 'crescent',
+      translucent: true,
+    });
+    await loading.present();
 
     try {
       const response: any = await firstValueFrom(
         this.pokeApiService.getPokemonList(this.offset, this.limit)
       );
 
-      this.total = response.count;
-      const resultados = response.results;
+      this.pokemons = [];
 
-      this.pokemons = await Promise.all(
-        resultados.map(async (pokemon: any) => {
-          const detalhes = await this.obterDetalhesPokemon(pokemon.url);
-          return {
-            ...pokemon,
-            ...detalhes,
-          };
-        })
-      );
+      for (let result of response.results) {
+        const detalhes = await this.obterDetalhesPokemon(result.url);
+        this.pokemons.push(detalhes);
+      }
+
+      this.total = response.count;
       this.pokemonsFiltrados = [...this.pokemons];
-      console.log(this.pokemons);
     } catch (error) {
       console.error(error);
     } finally {
-      this.carregando = false;
+      await loading.dismiss();
     }
   }
 
@@ -100,17 +110,17 @@ export class ListaPage implements OnInit {
     );
   }
 
-  proximaPagina() {
+  async proximaPagina() {
     if (this.offset + this.limit < this.total) {
       this.offset += this.limit;
-      this.carregarPokemons();
+      await this.carregarPokemons();
     }
   }
 
-  paginaAnterior() {
+  async paginaAnterior() {
     if (this.offset - this.limit >= 0) {
       this.offset -= this.limit;
-      this.carregarPokemons();
+      await this.carregarPokemons();
     }
   }
 
@@ -128,5 +138,11 @@ export class ListaPage implements OnInit {
 
   irParaDetalhes(id: number) {
     this.navCtrl.navigateForward(`/detalhes/${id}`);
+  }
+
+  async alterarLimite() {
+    console.log('alterarLimite');
+    this.offset = 0;
+    await this.carregarPokemons();
   }
 }
