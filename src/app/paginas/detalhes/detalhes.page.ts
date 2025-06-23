@@ -40,7 +40,6 @@ export class DetalhesPage implements OnInit {
     this.pokemon = await firstValueFrom(
       this.pokemonService.getPokemonById(this.id)
     );
-    console.log(this.pokemon);
   }
 
   async favoritarPokemon() {
